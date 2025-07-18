@@ -29,13 +29,17 @@ const ShoeCard = ({
     ? 'on-sale'
     : isNewShoe(releaseDate)
       ? 'new-release'
-      : 'default'
+      : 'default';
 
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          {variant === 'new-release' && (
+            <Flag color={COLORS.secondary}>Just Released!</Flag>
+          )}
+          {variant === 'on-sale' && <Flag color={COLORS.primary}>Sale</Flag>}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
@@ -65,6 +69,16 @@ const ImageWrapper = styled.div`
 const Image = styled.img`
   width: 100%;
   border-radius: 16px 16px 4px 4px;
+`;
+
+const Flag = styled.div`
+  background-color: ${({ color }) => color};
+  color: ${COLORS.white};
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  padding: 8px 12px;
+  border-radius: 2px;
 `;
 
 const Row = styled.div`
