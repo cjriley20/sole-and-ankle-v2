@@ -12,7 +12,9 @@ const Header = () => {
     <header>
       <SuperHeader />
       <MainHeader>
-        <HeaderLogo />
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
         <Nav>
           <NavLink href="/sale">Sale</NavLink>
           <NavLink href="/new">New&nbsp;Releases</NavLink>
@@ -21,6 +23,7 @@ const Header = () => {
           <NavLink href="/kids">Kids</NavLink>
           <NavLink href="/collections">Collections</NavLink>
         </Nav>
+        <LogoWrapper />
       </MainHeader>
     </header>
   );
@@ -30,21 +33,18 @@ const MainHeader = styled.div`
   padding: 20px 32px;
   border-bottom: 1px solid ${COLORS.gray[300]};
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  align-items: baseline;
+  gap: 32px;
 `;
 
-const HeaderLogo = styled(Logo)`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 32px;
+const LogoWrapper = styled.div`
+  flex: 0 0 200px; /* Pick width larger than logo */
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 64px;
+  margin-inline: auto;
 `;
 
 const NavLink = styled.a`
