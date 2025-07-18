@@ -77,6 +77,7 @@ const Image = styled.img`
 const Flag = styled.div`
   background-color: ${({ color }) => color};
   color: ${COLORS.white};
+  font-size: 0.875rem;
   position: absolute;
   top: 12px;
   right: -4px;
