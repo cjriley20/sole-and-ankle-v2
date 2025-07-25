@@ -31,26 +31,32 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default';
 
-  const hasSalePrice = salePrice != null;
-
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
-          {variant === 'new-release' && (
-            <Flag color={COLORS.secondary}>Just Released!</Flag>
-          )}
-          {variant === 'on-sale' && <Flag color={COLORS.primary}>Sale</Flag>}
+          {variant === 'new-release' && <NewFlag>Just Released!</NewFlag>}
+          {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price hasSalePrice={hasSalePrice}>{formatPrice(price)}</Price>
+          <Price
+            style={{
+              '--color': variant === 'on-sale' ? COLORS.gray[700] : undefined,
+              '--text-decoration':
+                variant === 'on-sale' ? 'line-through' : 'none',
+            }}
+          >
+            {formatPrice(price)}
+          </Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          {hasSalePrice && <SalePrice>{formatPrice(salePrice)}</SalePrice>}
+          {variant === 'on-sale' && (
+            <SalePrice>{formatPrice(salePrice)}</SalePrice>
+          )}
         </Row>
       </Wrapper>
     </Link>
@@ -74,14 +80,24 @@ const Image = styled.img`
 `;
 
 const Flag = styled.div`
-  background-color: ${({ color }) => color};
   color: ${COLORS.white};
-  font-size: 0.875rem;
+  font-size: ${14 / 16}rem;
+  font-weight: ${WEIGHTS.bold};
   position: absolute;
   top: 12px;
   right: -4px;
-  padding: 8px 12px;
+  padding: 0px 10px;
   border-radius: 2px;
+  height: 32px;
+  line-height: 32px;
+`;
+
+const SaleFlag = styled(Flag)`
+  background-color: ${COLORS.primary};
+`;
+
+const NewFlag = styled(Flag)`
+  background-color: ${COLORS.secondary};
 `;
 
 const Row = styled.div`
@@ -96,7 +112,8 @@ const Name = styled.h3`
 `;
 
 const Price = styled.span`
-  text-decoration: ${(props) => (props.hasSalePrice ? 'line-through' : 'none')};
+  color: var(--color);
+  text-decoration: var(--text-decoration);
 `;
 
 const ColorInfo = styled.p`
